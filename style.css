@@ -1,0 +1,41 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: system-ui, sans-serif;
+  padding: 20px;
+}
+
+.answer_wrong {
+  background-color: lightcoral;
+}
+
+.answer_correct {
+  background-color: palegreen;
+}
+
+.answerButton,
+.answerButton:link,
+.answerButton:visited {
+  display: inline-block;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  color: black;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #999;
+  margin-right: 8px;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}

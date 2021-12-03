@@ -22,7 +22,7 @@ body {
 .answerButton,
 .answerButton:link,
 .answerButton:visited {
-  display: inline-block;
+  display: block;
   padding: 1rem 1.5rem 1rem 1.5rem;
   color: black;
   font-family: system-ui, sans-serif;

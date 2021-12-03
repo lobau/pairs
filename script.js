@@ -196,12 +196,14 @@ const app = Vue.createApp({
       this.idx++;
     },
     resetQuiz() {
-      this.hasStarted = true;
+      this.questions = this.generateQuestions();
       this.idx = 0;
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
-      this.questions = this.generateQuestions();
+    },
+    startQuizz() {
+      this.hasStarted = true;
       this.speakCurrentQuestion();
     },
     talk(message) {

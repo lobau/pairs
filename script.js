@@ -2,7 +2,7 @@
 
 const app = Vue.createApp({
   data() {
-    let Pairs = [
+    this.Pairs = [
       ["Lock", "Rock"],
       ["Wash", "Wish"],
       ["Lose", "Loose"],
@@ -141,30 +141,34 @@ const app = Vue.createApp({
       ["Claire", "Clear"],
     ];
 
-    let Questions = [];
-    let Quiz = Pairs;
-    let randomPair, Question, correctAnswer;
-    while (Questions.length < 10) {
-      randomPair = Math.floor(Math.random() * Quiz.length);
-      Question = Quiz.splice(randomPair, 1)[0];
-      correctAnswer = Math.floor(Math.random() * Question.length);
-
-      Questions.push({
-        answers: Question,
-        correctAnswer: correctAnswer,
-      });
-    }
-
     return {
+      hasStarted: false,
       idx: 0,
       selectedAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
       count: 10,
-      questions: Questions,
+      questions: this.generateQuestions(),
     };
   },
   methods: {
+    generateQuestions() {
+      let Questions = [];
+      let Quiz = this.Pairs;
+      let randomPair, Question, correctAnswer;
+      while (Questions.length < 10) {
+        randomPair = Math.floor(Math.random() * Quiz.length);
+        Question = Quiz.splice(randomPair, 1)[0];
+        correctAnswer = Math.floor(Math.random() * Question.length);
+  
+        Questions.push({
+          answers: Question,
+          correctAnswer: correctAnswer,
+        });
+      }
+
+      return Questions;
+    },
     answered(e) {
       this.selectedAnswer = e.target.value;
       if (this.selectedAnswer == this.questions[this.idx].correctAnswer) {
@@ -192,10 +196,13 @@ const app = Vue.createApp({
       this.idx++;
     },
     resetQuiz() {
+      this.hasStarted = true;
       this.idx = 0;
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
+      this.questions = this.generateQuestions();
+      this.speakCurrentQuestion();
     },
     talk(message) {
       if ("speechSynthesis" in window) {
@@ -227,11 +234,7 @@ const app = Vue.createApp({
         this.speakCurrentQuestion();
       }
     },
-  },
-  mounted: function () {
-    this.idx = 0;
-    this.speakCurrentQuestion();
-  },
+  }
 });
 
 app.mount("#app");

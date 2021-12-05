@@ -1,56 +1,96 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pairs</title>
+    <link
+      rel="shortcut icon"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%92%AC%3C%2Ftext%3E%3C%2Fsvg%3E"
+      type="image/svg+xml"
+    />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="data.js"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vue@3.2.23/dist/vue.global.prod.js"
+    ></script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pairs</title>
-  <link rel="shortcut icon"
-    href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%92%AC%3C%2Ftext%3E%3C%2Fsvg%3E"
-    type="image/svg+xml">
-  <link type="text/css" rel="stylesheet" href="style.css" />
-  <script type="text/javascript" src="data.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/vue@3.2.23/dist/vue.global.prod.js"></script>
-</head>
-
-<body>
-  <div id="app">
-    <div v-if="idx < count && hasStarted">
-      <h1>{{idx + 1}} / {{count}}</h1>
-      <label class="answerButton"
-        :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}"
-        v-for="(answer, index) in questions[idx].answers" :key="index" :for="index">
-        <input :id="index" type="radio" class="hidden" :value="index" @change="answered($event)"
-          :disabled="selectedAnswer != ''" />
-        {{answer['word']}} <small>\'{{answer['phonetic']}}\</small>
-      </label>
-      <div @click="speakCurrentQuestion()" id="replayButton"><img src="replay.svg" /></div>
-    </div>
-    <div v-else-if="hasStarted">
-      <h1>Results</h1>
-      <div>
-        <p>Correct Answers: {{correctAnswers}}</p>
-        <p>Wrong Answers: {{wrongAnswers}}</p>
+  <body>
+    <div id="app">
+      <div v-if="idx < count && hasStarted">
+        <h1>{{idx + 1}} / {{count}}</h1>
+        <label
+          class="answerButton"
+          :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}"
+          v-for="(answer, index) in questions[idx].answers"
+          :key="index"
+          :for="index"
+        >
+          <input
+            :id="index"
+            type="radio"
+            class="hidden"
+            :value="index"
+            @change="answered($event)"
+            :disabled="selectedAnswer != ''"
+          />
+          {{answer['word']}} <small>\'{{answer['phonetic']}}\</small>
+        </label>
+        <div @click="speakCurrentQuestion()" id="replayButton">
+          <img src="replay.svg" />
+        </div>
       </div>
-      <div>
-        <button class="answerButton" @click="resetQuiz">Play again</button>
+      <div v-else-if="hasStarted">
+        <h1>Results</h1>
+        <div>
+          <p>Correct Answers: {{correctAnswers}}</p>
+          <p>Wrong Answers: {{wrongAnswers}}</p>
+        </div>
+        <div>
+          <button class="answerButton" @click="resetQuiz">Play again</button>
+        </div>
+        <div>
+          <table class="resultTable">
+            <thead>
+              <th>Session</th>
+              <th>Correct</th>
+              <th>Wrong</th>
+            </thead>
+            <tr v-for="object in history.slice().reverse()" :class="{'answer_correct' : currentSession == object['session']}">
+              <td>{{formatDate(object["session"])}}</td>
+              <td>{{object["correctAnswers"]}}</td>
+              <td>{{object["wrongAnswers"]}}</td>
+            </tr>
+          </table>
+          <button class="answerButton" @click="clearHistory">Clear History</button>
+        </div>
+      </div>
+      <div v-else>
+        <h1>Audio Pairs</h1>
+        <p>
+          A game for people to train their ear. The base idea is that it's very
+          hard to learn a language if your ears cannot distinguish the different
+          sounds that the language uses. A lot of language tools go straight to
+          the syntax, the grammar, the culture, but little is done to train the
+          ear to just recognize the sounds. This is the goal of this app. No
+          vocabulary, no lessons, just hearing reinforcement thru short
+          sessions.
+        </p>
+        <br />
+        <p>Instructions:</p>
+        <p>Listen to the audio and pick the right word!</p>
+        <div>
+          <button class="answerButton" @click="startQuizz">
+            Start playing
+          </button>
+        </div>
+        <p>Curse words</p>
+        <p>Made by lobau</p>
+        <p>Source on github</p>
       </div>
     </div>
-    <div v-else>
-      <h1>Audio Pairs</h1>
-      <p>A game for people to train their ear. The base idea is that it's very hard to learn a language if your ears
-        cannot distinguish the different sounds that the language uses. A lot of language tools go straight to the
-        syntax, the grammar, the culture, but little is done to train the ear to just recognize the sounds. This is the
-        goal of this app. No vocabulary, no lessons, just hearing reinforcement thru short sessions.</p>
-      <br />
-      <p>Instructions:</p>
-      <p>Listen to the audio and pick the right word!</p>
-      <div>
-        <button class="answerButton" @click="startQuizz">Start playing</button>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript" src="script.js"></script>
-</body>
-
+    <script type="text/javascript" src="script.js"></script>
+  </body>
 </html>

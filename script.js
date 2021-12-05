@@ -2,18 +2,20 @@ const app = Vue.createApp({
   data() {
     return {
       hasStarted: false,
-      idx: 0,
+      idx: -1,
       selectedAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
       count: 10,
       questions: this.generateQuestions(10),
+      history: localStorage.getItem('history'),
+      currentSession: new Date().valueOf()
     };
   },
   methods: {
     generateQuestions(count) {
       let Questions = [];
-      let Quiz = Pairs_new.slice();
+      let Quiz = Pairs.slice();
       let randomPair, Question, correctAnswer;
       while (Questions.length < count) {
         randomPair = Math.floor(Math.random() * Quiz.length);
@@ -53,6 +55,14 @@ const app = Vue.createApp({
     },
     showResults() {
       this.idx++;
+      let history = JSON.parse(localStorage.getItem('history')) || [];
+      history.push({
+        "session": this.currentSession,
+        "correctAnswers": this.correctAnswers,
+        "wrongAnswers": this.wrongAnswers
+      });
+      localStorage.setItem('history', JSON.stringify(history));
+      this.history = history;
     },
     resetQuiz() {
       this.questions = this.generateQuestions(this.count);
@@ -60,10 +70,11 @@ const app = Vue.createApp({
       this.selectedAnswer = "";
       this.correctAnswers = 0;
       this.wrongAnswers = 0;
+      this.currentSession = new Date().valueOf();
     },
     startQuizz() {
       this.hasStarted = true;
-      this.speakCurrentQuestion();
+      this.resetQuiz();
     },
     talk(message) {
       if ("speechSynthesis" in window) {
@@ -83,6 +94,14 @@ const app = Vue.createApp({
         ]["word"]
       );
     },
+    formatDate(rawDate) {
+      var date = new Date(rawDate);
+      return date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+    },
+    clearHistory() {
+      localStorage.setItem('history', JSON.stringify([]));
+      this.hasStarted = false;
+    }
   },
   computed: {
     currentQuestion() {

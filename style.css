@@ -52,6 +52,18 @@ small {
   float: right;
 }
 
+.resultTable {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.resultTable * {
+  padding: 0.35rem;
+  border-bottom: 1px solid #999;
+  text-align: left;
+}
+
 .hidden {
   display: none;
 }

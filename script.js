@@ -1,15 +1,16 @@
 const app = Vue.createApp({
   data() {
     return {
+      name: "Pairs",
       hasStarted: false,
       idx: -1,
       selectedAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
-      count: 10,
-      questions: this.generateQuestions(10),
-      history: localStorage.getItem('history'),
-      currentSession: new Date().valueOf()
+      count: 2,
+      questions: this.generateQuestions(2),
+      history: localStorage.getItem("history"),
+      currentSession: new Date().valueOf(),
     };
   },
   methods: {
@@ -55,13 +56,13 @@ const app = Vue.createApp({
     },
     showResults() {
       this.idx++;
-      let history = JSON.parse(localStorage.getItem('history')) || [];
+      let history = JSON.parse(localStorage.getItem("history")) || [];
       history.push({
-        "session": this.currentSession,
-        "correctAnswers": this.correctAnswers,
-        "wrongAnswers": this.wrongAnswers
+        session: this.currentSession,
+        correctAnswers: this.correctAnswers,
+        wrongAnswers: this.wrongAnswers,
       });
-      localStorage.setItem('history', JSON.stringify(history));
+      localStorage.setItem("history", JSON.stringify(history));
       this.history = history;
     },
     resetQuiz() {
@@ -96,12 +97,66 @@ const app = Vue.createApp({
     },
     formatDate(rawDate) {
       var date = new Date(rawDate);
-      return date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+      return (
+        date.getMonth() +
+        "/" +
+        date.getDate() +
+        " " +
+        date.getHours() +
+        ":" +
+        date.getMinutes()
+      );
+    },
+    backHome() {
+      this.hasStarted = false;
     },
     clearHistory() {
-      localStorage.setItem('history', JSON.stringify([]));
-      this.hasStarted = false;
-    }
+      localStorage.setItem("history", JSON.stringify([]));
+      this.backHome();
+    },
+    scheduleNotification() {
+      if (!("Notification" in window)) {
+        alert("Your browser doesn't support the Notification API yet.");
+        return;
+      }
+      if (!("showTrigger" in Notification.prototype)) {
+        alert("Your browser doesn't support the Notification Trigger API yet.");
+        return;
+      }
+
+      Notification.requestPermission()
+        .then(() => {
+          if (Notification.permission !== "granted") {
+            throw "Notification permission is not granted";
+          }
+        })
+        .then(() => navigator.serviceWorker.getRegistration())
+        .then((reg) => {
+          reg.showNotification("Time to train your ears some more!", {
+            showTrigger: new TimestampTrigger(new Date().getTime() + 10 * 1000),
+            tag: new Date().getTime(), // a unique ID
+            body: "Remember, at least 20 min a day!", // content of the push notification
+            data: {
+              url: window.location.href, // pass the current url to the notification
+            },
+            badge: "images/icon-192x192.png",
+            icon: "images/icon-192x192.png",
+            actions: [
+              {
+                action: 'open',
+                title: 'Open'
+              },
+              {
+                action: 'snooze',
+                title: 'Snooze',
+              }
+            ]
+          });
+        })
+        .catch((err) => {
+          alert("Notification Trigger API error: " + err);
+        });
+    },
   },
   computed: {
     currentQuestion() {

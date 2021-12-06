@@ -5,7 +5,6 @@ const Pairs = [
   [{ word: "Lose", phonetic: "lˈuːz" }, { word: "Loose", phonetic: "lˈuːs" }],
   [{ word: "Advice", phonetic: "ɐdvˈaɪs" }, { word: "Advise", phonetic: "ɐdvˈaɪz" }],
   [{ word: "Affect", phonetic: "ɐfˈɛkt" }, { word: "Effect", phonetic: "ɪfˈɛkt" }],
-  [{ word: "Compliment", phonetic: "kˈɑːmplɪmənt" }, { word: "Complement", phonetic: "kˈɑːmplɪmənt" }],
   [{ word: "Hang", phonetic: "hˈæŋ" }, { word: "Hung", phonetic: "həŋ" }],
   [{ word: "Price", phonetic: "prīs" }, { word: "Prize", phonetic: "prīz" }],
   [{ word: "Bed", phonetic: "bed" }, { word: "Bad", phonetic: "bad" }],

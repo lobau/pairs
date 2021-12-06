@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <title>Pairs</title>
-    <link
-      rel="shortcut icon"
-      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%92%AC%3C%2Ftext%3E%3C%2Fsvg%3E"
-      type="image/svg+xml"
-    />
+
+    <meta name="apple-mobile-web-app-status-bar" content="#000" />
+    <meta name="theme-color" content="black" />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="shortcut icon" href="images/favicon.svg" type="image/svg+xml" />
     <link type="text/css" rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="data.js"></script>
     <script
@@ -43,54 +47,95 @@
         </div>
       </div>
       <div v-else-if="hasStarted">
-        <h1>Results</h1>
-        <div>
-          <p>Correct Answers: {{correctAnswers}}</p>
-          <p>Wrong Answers: {{wrongAnswers}}</p>
-        </div>
-        <div>
-          <button class="answerButton" @click="resetQuiz">Play again</button>
-        </div>
-        <div>
+        <h1 v-if="correctAnswers >= count / 2">Well done!</h1>
+        <h1 v-else>Well…</h1>
+        <section>
           <table class="resultTable">
             <thead>
               <th>Session</th>
               <th>Correct</th>
-              <th>Wrong</th>
+              <th>Incorrect</th>
             </thead>
-            <tr v-for="object in history.slice().reverse()" :class="{'answer_correct' : currentSession == object['session']}">
+            <tr
+              v-for="object in history.slice().reverse()"
+              :class="{'answer_correct' : currentSession == object['session']}"
+            >
               <td>{{formatDate(object["session"])}}</td>
               <td>{{object["correctAnswers"]}}</td>
               <td>{{object["wrongAnswers"]}}</td>
             </tr>
           </table>
-          <button class="answerButton" @click="clearHistory">Clear History</button>
-        </div>
+          <button class="cta" @click="resetQuiz">Play again</button>
+          <button class="cta" @click="backHome">Back home</button>
+        </section>
+
+        <section>
+          <h2>Reminder</h2>
+          <p>
+            For this method to be efficient, you need to do it at least 20 min a
+            day. This schedule a <b>one-time</b> reminder using push
+            notifications.
+          </p>
+          <button class="cta" @click="scheduleNotification">
+            Remind me in 1h
+          </button>
+          <button class="cta" @click="scheduleNotification">6h</button>
+          <button class="cta" @click="scheduleNotification">12h</button>
+        </section>
+
+        <section>
+          <h2>Reset</h2>
+          <button class="cta" @click="clearHistory">Clear History</button>
+          <button class="cta">Cancel Reminder</button>
+        </section>
       </div>
       <div v-else>
-        <h1>Audio Pairs</h1>
+        <h1>{{name}}</h1>
         <p>
-          A game for people to train their ear. The base idea is that it's very
-          hard to learn a language if your ears cannot distinguish the different
-          sounds that the language uses. A lot of language tools go straight to
-          the syntax, the grammar, the culture, but little is done to train the
-          ear to just recognize the sounds. This is the goal of this app. No
-          vocabulary, no lessons, just hearing reinforcement thru short
-          sessions.
+          {{name}} is a ear training app. No vocabulary, no lessons, just hearing
+          reinforcement thru short sessions.
+          <a href="https://github.com/lobau/pairs" target="_blank">Learn more</a
+          >.
         </p>
-        <br />
-        <p>Instructions:</p>
-        <p>Listen to the audio and pick the right word!</p>
+        <section>
+          <h2>Instructions:</h2>
+          <p>Listen to the audio and pick the right word!</p>
+        </section>
         <div>
-          <button class="answerButton" @click="startQuizz">
-            Start playing
-          </button>
+          <button class="cta" @click="startQuizz">Start playing</button>
         </div>
-        <p>Curse words</p>
-        <p>Made by lobau</p>
-        <p>Source on github</p>
+
+        <section>
+          <p>
+            <a href="https://lobau.io/" target="_blank"
+              >Made by Laurent Baumann</a
+            >
+          </p>
+          <p>
+            <a href="https://github.com/lobau/pairs" target="_blank"
+              >Source on Github</a
+            >
+          </p>
+        </section>
       </div>
     </div>
     <script type="text/javascript" src="script.js"></script>
+
+    <script type="text/javascript">
+      window.addEventListener("load", () => {
+        registerSW();
+      });
+
+      // Register the Service Worker
+      async function registerSW() {
+        if ("serviceWorker" in navigator) {
+          try {
+            await navigator.serviceWorker.register("service-worker.js");
+          } catch (e) {
+            console.log("SW registration failed");
+          }
+        }
+      }
+    </script>
   </body>
 </html>

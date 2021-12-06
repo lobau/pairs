@@ -9,6 +9,7 @@
 body {
   font-family: system-ui, sans-serif;
   padding: 20px;
+  color: #444;
 }
 
 .answer_wrong {
@@ -24,12 +25,19 @@ h1 {
   margin-bottom: 40px;
 }
 
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: IndianRed;
+}
+
 .answerButton,
 .answerButton:link,
 .answerButton:visited {
   display: block;
   padding: 1rem 1.5rem 1rem 1.5rem;
-  color: black;
+  color: DimGray;
   font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 2rem;
@@ -39,6 +47,11 @@ h1 {
   border: 1px solid #999;
   margin-right: 8px;
   margin-top: 16px;
+}
+
+.answerButton:hover {
+  color: black;
+  border: 1px solid black;
 }
 
 #replayButton {
@@ -63,16 +76,22 @@ section {
 .cta:visited {
   display: inline-block;
   padding: 1rem 1.5rem 1rem 1.5rem;
-  color: black;
+  color: DimGray;
+  background-color: GhostWhite;
   font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
   text-align: center;
   border-radius: 4px;
-  border: 1px solid #999;
+  border: 1px solid DimGray;
   margin-right: 8px;
   margin-top: 16px;
+}
+
+.cta:hover {
+  color: black;
+  border: 1px solid black;
 }
 
 .resultTable {
@@ -83,10 +102,64 @@ section {
 
 .resultTable * {
   padding: 0.35rem;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid Gainsboro;
   text-align: left;
 }
 
 .hidden {
   display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #3e3e3e;
+    color: white;
+  }
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: lightcoral;
+  }
+
+  .cta,
+  .cta:link,
+  .cta:visited {
+    background-color: Grey;
+    color: Gainsboro;
+    border: 1px solid Gainsboro;
+  }
+
+  .cta:hover {
+    background-color: Dimgray;
+    color: White;
+    border: 1px solid White;
+  }
+
+  .answerButton,
+  .answerButton:link,
+  .answerButton:visited {
+    color: Gainsboro;
+    border: 1px solid Gainsboro;
+  }
+
+  .answerButton:hover {
+    color: White;
+    border: 1px solid White;
+  }
+
+  .answer_wrong {
+    background-color: IndianRed;
+  }
+  
+  .answer_correct {
+    background-color: MediumSeaGreen;
+  }
+
+  .resultTable * {
+    padding: 0.35rem;
+    border-bottom: 1px solid DimGray;
+    text-align: left;
+  }
 }

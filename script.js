@@ -7,8 +7,8 @@ const app = Vue.createApp({
       selectedAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
-      count: 2,
-      questions: this.generateQuestions(2),
+      count: 15,
+      questions: this.generateQuestions(15),
       history: localStorage.getItem("history"),
       currentSession: new Date().valueOf(),
     };

@@ -2,6 +2,8 @@
 A game for people to train their ear.
 The base idea is that it's very hard to learn a language if your ears cannot distinguish the different sounds that the language uses. A lot of language tools go straight to the syntax, the grammar, the culture, but little is done to train the ear to *just* recognize the sounds. This is the goal of this app. No vocabulary, no lessons, just hearing reinforcement thru short sessions.
 
+You can play the game at https://lobau.io/pairs/
+
 ## Use cases
 The goal of this app is to be used anywhere you have 5 minutes to spare. You don't need to speak our loud, you don't even need to concentrate. Just training your ears. It could be as simple as a screen playing a sound, and 2 different words you can tap on. Then something would tell you if you got it right or wrong.
 A mobile app seems logical for the use case, but a wearable app could be a good companion, if not the main experience.

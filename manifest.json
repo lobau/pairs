@@ -3,7 +3,7 @@
     "short_name":"Pairs",
     "start_url":"index.html",
     "display":"standalone",
-    "background_color":"#000",
+    "background_color":"#3e3e3e",
     "theme_color":"black",
     "scope": ".",
     "description":"Pairs is a ear training app.",

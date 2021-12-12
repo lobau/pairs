@@ -7,7 +7,7 @@
 
     <title>Pairs</title>
 
-    <meta name="apple-mobile-web-app-status-bar" content="#000" />
+    <meta name="apple-mobile-web-app-status-bar" content="#3e3e3e" />
     <meta name="theme-color" content="black" />
 
     <link rel="manifest" href="manifest.json" />
@@ -42,9 +42,9 @@
           />
           {{answer['word']}} <small>\'{{answer['phonetic']}}\</small>
         </label>
-        <div @click="speakCurrentQuestion()" id="replayButton">
-          <img src="replay.svg" />
-        </div>
+        <button class="cta" @click="speakCurrentQuestion()">
+          Replay audio
+        </button>
       </div>
       <div v-else-if="hasStarted">
         <h1 v-if="correctAnswers >= count / 2">Well done!</h1>
@@ -91,19 +91,42 @@
       </div>
       <div v-else>
         <h1>{{name}}</h1>
-        <p>
-          {{name}} is a ear training app. No vocabulary, no lessons, just hearing
-          reinforcement thru short sessions.
-          <a href="https://github.com/lobau/pairs" target="_blank">Learn more</a
-          >.
-        </p>
         <section>
-          <h2>Instructions:</h2>
+          <h2>About</h2>
+          <p>
+            {{name}} is an ear training app. No vocabulary, no lessons, just
+            hearing reinforcement through short sessions.
+          </p>
+          <p>
+            You can learn more about the research behind this project on the
+            <a href="https://github.com/lobau/pairs" target="_blank"
+              >code repository</a
+            >.
+          </p>
+        </section>
+        
+
+        <section>
+          <h2>Instructions</h2>
           <p>Listen to the audio and pick the right word!</p>
         </section>
         <div>
           <button class="cta" @click="startQuizz">Start playing</button>
         </div>
+
+        <section>
+          <h2>Notice</h2>
+          <p>
+            I believe that it's important when learning English to avoid saying
+            curse words when mispronouncing words. As such, I believe it's
+            critical to train your ears on the differences between bitch and
+            beach, shit and sheet, etc.
+          </p>
+          <p>
+            If you are offended by this decision, please do not use this
+            software.
+          </p>
+        </section>
 
         <section>
           <p>

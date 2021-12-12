@@ -116,11 +116,11 @@ const app = Vue.createApp({
     },
     scheduleNotification() {
       if (!("Notification" in window)) {
-        alert("Your browser doesn't support the Notification API yet.");
+        alert("Your browser doesn't support the Notification API.");
         return;
       }
       if (!("showTrigger" in Notification.prototype)) {
-        alert("Your browser doesn't support the Notification Trigger API yet.");
+        alert("Your browser doesn't support the Notification Trigger API.");
         return;
       }
 

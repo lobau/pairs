@@ -17,3 +17,18 @@ Several studies have been conducted to address the learning of a nonnative speec
 ## Possible later improvements
 - Storing the phonetic pronunciation of each word, so the app learn which phonemes the user has the hardest time with, and focus on those. For example, the app could notice that the user get the `ə` sound wrong often, and focus more on words containing it, like `Kernel`
 - The initial list of word is in English, but that could be adapted to many languages, like French, German, or Mandarin.
+
+## How to run
+This is totally client side. Just serve the files on an http server (I usually use livereload during developement) and open index.html
+
+## Technology used
+This app uses:
+- [Vue](https://vuejs.org/) for the UI 
+- The [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) to play audio
+- The [Notification API](https://notifications.spec.whatwg.org/) to trigger push notifications
+- [Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) and [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+- [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for keeping track of past sessions score.
+
+## Warning
+I believe that it's important when learning English to avoid saying curse words when mispronouncing words. For example, at my time at Apple I learnt the hard way to not misspronounce "sheets" when talking about the view that roll down from windows. As such, I believe it's important to train your ears on the differences between bitch and beach, shit and sheet, shart and chart, etc.
+If you are offended by this decision, please do not use this software.

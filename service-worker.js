@@ -1,7 +1,7 @@
 // service-worker.js
 // listen to the install event
 
-var staticCacheName = "fənetik";
+var staticCacheName = "Pairs";
 
 self.addEventListener("install", function (e) {
   e.waitUntil(

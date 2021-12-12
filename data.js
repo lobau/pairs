@@ -141,4 +141,8 @@ const Pairs = [
   [{ word: "Laugh", phonetic: "laf" }, { word: "Loaf", phonetic: "lōf" }],
   [{ word: "Knotty", phonetic: "nä-tē" }, { word: "Naughty", phonetic: "nȯ-tē" }],
   [{ word: "Shart", phonetic: "shärt" }, { word: "Chart", phonetic: "chärt" }],
+  [{ word: "Fleece", phonetic: "flēs" }, { word: "Fleas", phonetic: "flēz" }],
+  [{ word: "Spite", phonetic: "spīt" }, { word: "Spit", phonetic: "spit" }],
+  [{ word: "Pauper", phonetic: "pȯ-pər" }, { word: "Popper", phonetic: "pä-pər" }],
+  [{ word: "Sleep", phonetic: "slēp" }, { word: "Slip", phonetic: "slip" }],
 ];

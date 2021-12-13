@@ -1,164 +1,145 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Pairs</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <meta name="apple-mobile-web-app-status-bar" content="#3e3e3e" />
-    <meta name="theme-color" content="black" />
+  <title>Pairs</title>
 
-    <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-status-bar" content="#3e3e3e" />
+  <meta name="theme-color" content="black" />
 
-    <link rel="shortcut icon" href="images/favicon.svg" type="image/svg+xml" />
-    <link type="text/css" rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="data.js"></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/vue@3.2.23/dist/vue.global.prod.js"
-    ></script>
-  </head>
+  <link rel="manifest" href="manifest.json" />
 
-  <body>
-    <div id="app">
-      <div v-if="idx < count && hasStarted">
-        <h1>{{idx + 1}} / {{count}}</h1>
-        <label
-          class="answerButton"
-          :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}"
-          v-for="(answer, index) in questions[idx].answers"
-          :key="index"
-          :for="index"
-        >
-          <input
-            :id="index"
-            type="radio"
-            class="hidden"
-            :value="index"
-            @change="answered($event)"
-            :disabled="selectedAnswer != ''"
-          />
-          {{answer['word']}} <small>\'{{answer['phonetic']}}\</small>
-        </label>
-        <button class="cta" @click="speakCurrentQuestion()">
-          Replay audio
-        </button>
-      </div>
-      <div v-else-if="hasStarted">
-        <h1 v-if="correctAnswers >= count / 2">Well done!</h1>
-        <h1 v-else>Well…</h1>
-        <section>
-          <table class="resultTable">
-            <thead>
-              <th>Session</th>
-              <th>Correct</th>
-              <th>Incorrect</th>
-            </thead>
-            <tr
-              v-for="object in history.slice().reverse()"
-              :class="{'answer_correct' : currentSession == object['session']}"
-            >
-              <td>{{formatDate(object["session"])}}</td>
-              <td>{{object["correctAnswers"]}}</td>
-              <td>{{object["wrongAnswers"]}}</td>
-            </tr>
-          </table>
-          <button class="cta" @click="resetQuiz">New session</button>
-          <button class="cta" @click="backHome">Back home</button>
-        </section>
+  <link rel="shortcut icon" href="images/favicon.svg" type="image/svg+xml" />
+  <link type="text/css" rel="stylesheet" href="style.css" />
+  <script type="text/javascript" src="data.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/vue@3.2.23/dist/vue.global.prod.js"></script>
+</head>
 
-        <section>
-          <h2>Reminder</h2>
-          <p>
-            For this method to be efficient, you need to do it at least 20 min a
-            day. This schedule a <b>one-time</b> reminder using push
-            notifications.
-          </p>
-          <button class="cta" @click="scheduleNotification">
-            Remind me in 1h
-          </button>
-          <button class="cta" @click="scheduleNotification">6h</button>
-          <button class="cta" @click="scheduleNotification">12h</button>
-        </section>
-
-        <section>
-          <h2>Reset</h2>
-          <button class="cta" @click="clearHistory">Clear History</button>
-          <button class="cta">Cancel Reminder</button>
-        </section>
-      </div>
-      <div v-else>
-        <h1>{{name}}</h1>
-        <section>
-          <h2>About</h2>
-          <p>
-            {{name}} is an ear training app. No vocabulary, no lessons, just
-            hearing reinforcement through short sessions.
-          </p>
-          <p>
-            You can learn more about the research behind this project on the
-            <a href="https://github.com/lobau/pairs" target="_blank"
-              >code repository</a
-            >.
-          </p>
-        </section>
-        
-
-        <section>
-          <h2>Instructions</h2>
-          <p>Listen to the audio and pick the right word!</p>
-        </section>
-        <div>
-          <button class="cta" @click="startQuizz">Start playing</button>
-        </div>
-
-        <section>
-          <h2>Notice</h2>
-          <p>
-            I believe that it's important when learning English to avoid saying
-            curse words when mispronouncing words. As such, I believe it's
-            critical to train your ears on the differences between bitch and
-            beach, shit and sheet, etc.
-          </p>
-          <p>
-            If you are offended by this decision, please do not use this
-            software.
-          </p>
-        </section>
-
-        <section>
-          <p>
-            <a href="https://lobau.io/" target="_blank"
-              >Made by Laurent Baumann</a
-            >
-          </p>
-          <p>
-            <a href="https://github.com/lobau/pairs" target="_blank"
-              >Source on Github</a
-            >
-          </p>
-        </section>
-      </div>
+<body>
+  <div id="app">
+    <div v-if="idx < count && hasStarted">
+      <h1>{{idx + 1}} / {{count}}</h1>
+      <label class="answerButton"
+        :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}"
+        v-for="(answer, index) in questions[idx].answers" :key="index" :for="index">
+        <input :id="index" type="radio" class="hidden" :value="index" @change="answered($event)"
+          :disabled="selectedAnswer != ''" />
+        {{answer['word']}}
+        <small v-if="index == questions[idx]['correctAnswer'] && selectedAnswer != ''"><svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M1,5L5,9L11,2" fill="none" stroke="var(--color-correct)" stroke-width="2" stroke-linecap="round" /></svg>&nbsp;Correct answer</small>
+        <small v-else-if="selectedAnswer == index  && selectedAnswer != ''"><svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2,2L10,10M2,10L10,2" fill="none" stroke="var(--color-incorrect)" stroke-width="2" stroke-linecap="round" /></svg>&nbsp;Incorrect!</small>
+        <small v-else>\'{{answer['phonetic']}}\</small>
+      </label>
+      <button class="cta" @click="speakCurrentQuestion()">
+        Replay audio
+      </button>
     </div>
-    <script type="text/javascript" src="script.js"></script>
+    <div v-else-if="hasStarted">
+      <h1 v-if="correctAnswers >= count / 2">Well done!</h1>
+      <h1 v-else>Well…</h1>
+      <section>
+        <table class="resultTable">
+          <thead>
+            <th>Session</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+          </thead>
+          <tr v-for="object in history.slice().reverse()"
+            :class="{'answer_correct' : currentSession == object['session']}">
+            <td>{{formatDate(object["session"])}}</td>
+            <td>{{object["correctAnswers"]}}</td>
+            <td>{{object["wrongAnswers"]}}</td>
+          </tr>
+        </table>
+        <button class="cta" @click="resetQuiz">New session</button>
+        <button class="cta" @click="backHome">Back home</button>
+      </section>
 
-    <script type="text/javascript">
-      window.addEventListener("load", () => {
-        registerSW();
-      });
+      <section>
+        <h2>Reminder</h2>
+        <p>
+          For this method to be efficient, you need to do it at least 20 min a
+          day. This schedule a <b>one-time</b> reminder using push
+          notifications.
+        </p>
+        <button class="cta" @click="scheduleNotification">
+          Remind me in 1h
+        </button>
+        <button class="cta" @click="scheduleNotification">6h</button>
+        <button class="cta" @click="scheduleNotification">12h</button>
+      </section>
 
-      // Register the Service Worker
-      async function registerSW() {
-        if ("serviceWorker" in navigator) {
-          try {
-            await navigator.serviceWorker.register("service-worker.js");
-          } catch (e) {
-            console.log("SW registration failed");
-          }
+      <section>
+        <h2>Reset</h2>
+        <button class="cta" @click="clearHistory">Clear History</button>
+        <button class="cta">Cancel Reminder</button>
+      </section>
+    </div>
+    <div v-else>
+      <img src="/images/favicon.svg" width="32" height="32" alt="logo" />
+      <!-- <h1>{{name}}</h1> -->
+
+      <section>
+        <h2>About {{name}}</h2>
+        <p>
+          {{name}} is an ear training app. No vocabulary, no lessons, just
+          hearing reinforcement through short sessions.
+        </p>
+        <p>
+          You can learn more about the research behind this project on <a href="https://github.com/lobau/pairs"
+            target="_blank">Github</a>.
+        </p>
+      </section>
+
+      <div>
+        <button class="cta" @click="startQuizz">Start playing</button>
+      </div>
+
+      <section>
+        <h2>Notice</h2>
+        <p>
+          I believe that it's important when learning English to avoid saying
+          curse words when mispronouncing words. As such, I believe it's
+          critical to train your ears on the differences between bitch and
+          beach, shit and sheet, etc.
+        </p>
+        <p>
+          If you are offended by this decision, please do not use this
+          software.
+        </p>
+      </section>
+
+      <section>
+        <p>
+          <a href="https://lobau.io/" target="_blank">Made by Laurent Baumann</a>
+        </p>
+        <p>
+          <a href="https://github.com/lobau/pairs" target="_blank">Source on Github</a>
+        </p>
+      </section>
+    </div>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+
+  <script type="text/javascript">
+    window.addEventListener("load", () => {
+      registerSW();
+    });
+
+    // Register the Service Worker
+    async function registerSW() {
+      if ("serviceWorker" in navigator) {
+        try {
+          await navigator.serviceWorker.register("service-worker.js");
+        } catch (e) {
+          console.log("SW registration failed");
         }
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

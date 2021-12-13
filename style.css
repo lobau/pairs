@@ -1,35 +1,76 @@
+@font-face {
+  font-family: 'mononoki';
+  src: url(/fonts/mononoki-Regular.woff2) format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'mononoki';
+  src: url(/fonts/mononoki-Bold.woff2) format('woff2');
+  font-weight: 700;
+}
+
+:root {
+  --em-size: 16px;
+  --font-stack: "mononoki", system-ui, sans-serif;
+
+  --max-width: 24rem;
+
+  --color-surface: GhostWhite;
+  --color-background: Cornsilk;
+  --color-text: DimGrey;
+  --color-links: Indigo;
+
+  --color-incorrect: FireBrick;
+  --color-incorrect-background: Pink;
+  --color-correct: Green;
+  --color-correct-background: PaleGreen;
+}
+
+::selection {
+  background: Moccasin;
+}
+
+
 * {
   padding: 0;
   margin: 0;
   border: none;
   box-sizing: border-box;
-  /* outline: 1px solid rgba(255, 0, 0, 0.25); */
 }
 
 body {
-  font-family: system-ui, sans-serif;
-  padding: 20px;
-  color: #444;
+  font-family: var(--font-stack);
+  padding: 2rem;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-size: var(--em-size);
 }
 
-.answer_wrong {
-  background-color: lightcoral;
-}
-
-.answer_correct {
-  background-color: palegreen;
+#app {
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
 h1 {
-  text-align: center;
+  text-align: left;
   margin-bottom: 40px;
+}
+
+h2 {
+  font: bold 1.25rem/2rem var(--font-stack);
+}
+
+p {
+  font: normal 1rem/1.5rem var(--font-stack);
+  margin-bottom: 1rem;
 }
 
 a:link,
 a:visited,
 a:hover,
 a:active {
-  color: IndianRed;
+  color: var(--color-links);
 }
 
 .answerButton,
@@ -37,34 +78,37 @@ a:active {
 .answerButton:visited {
   display: block;
   padding: 1rem 1.5rem 1rem 1.5rem;
-  color: DimGray;
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-stack);
+  font-weight: bold;
   font-size: 2rem;
   text-decoration: none;
   text-align: center;
-  border-radius: 4px;
-  border: 1px solid #999;
-  margin-right: 8px;
-  margin-top: 16px;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-text);
+  margin-top: 1rem;
 }
 
-.answerButton:hover {
-  color: black;
-  border: 1px solid black;
+.answer_wrong {
+  color: var(--color-incorrect);
+  border-color: var(--color-incorrect);
+  background-color: var(--color-incorrect-background);
 }
 
-#replayButton {
-  margin-top: 40px;
-  text-align: center;
+.answer_correct {
+  color: var(--color-correct);
+  border-color: var(--color-correct);
+  background-color: var(--color-correct-background);
 }
 
 small {
   margin-top: 1rem;
-  font-family: monospace;
-  font-weight: 300;
+  font-family: system-ui, sans-serif;
+  font-weight: normal;
   font-size: 1rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 section {
@@ -75,23 +119,23 @@ section {
 .cta:link,
 .cta:visited {
   display: inline-block;
-  padding: 1rem 1.5rem 1rem 1.5rem;
-  color: DimGray;
-  background-color: GhostWhite;
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  padding: 0.9rem 1.5rem 1rem 1.5rem;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  font-family: var(--font-stack);
+  font-weight: bold;
+  font-size: 1.125rem;
   text-decoration: none;
   text-align: center;
-  border-radius: 4px;
-  border: 1px solid DimGray;
-  margin-right: 8px;
-  margin-top: 16px;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-text);
+  margin-right: 0.5rem;
+  margin-top: 1rem;
 }
 
 .cta:hover {
-  color: black;
-  border: 1px solid black;
+  color: var(--color-links);
+  border-color: var(--color-links);
 }
 
 .resultTable {
@@ -111,55 +155,20 @@ section {
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #3e3e3e;
-    color: white;
-  }
 
-  a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    color: lightcoral;
-  }
-
-  .cta,
-  .cta:link,
-  .cta:visited {
-    background-color: Grey;
-    color: Gainsboro;
-    border: 1px solid Gainsboro;
-  }
-
-  .cta:hover {
-    background-color: Dimgray;
-    color: White;
-    border: 1px solid White;
-  }
-
-  .answerButton,
-  .answerButton:link,
-  .answerButton:visited {
-    color: Gainsboro;
-    border: 1px solid Gainsboro;
-  }
-
-  .answerButton:hover {
-    color: White;
-    border: 1px solid White;
-  }
-
-  .answer_wrong {
-    background-color: IndianRed;
+  :root {  
+    --color-surface: #303030;
+    --color-background: #3e3e3e;
+    --color-text: Gainsboro;
+    --color-links: White;
+  
+    --color-incorrect-background: FireBrick;
+    --color-incorrect: Pink;
+    --color-correct-background: Green;
+    --color-correct: PaleGreen;
   }
   
-  .answer_correct {
-    background-color: MediumSeaGreen;
-  }
-
-  .resultTable * {
-    padding: 0.35rem;
-    border-bottom: 1px solid DimGray;
-    text-align: left;
+  ::selection {
+    background: DimGray;
   }
 }

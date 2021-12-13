@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
   padding: 20px;
   color: #444;
 }
@@ -38,7 +38,7 @@ a:active {
   display: block;
   padding: 1rem 1.5rem 1rem 1.5rem;
   color: DimGray;
-  font-family: system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
   font-weight: 700;
   font-size: 2rem;
   text-decoration: none;
@@ -61,7 +61,7 @@ a:active {
 
 small {
   margin-top: 1rem;
-  font-family: monospace;
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
   font-weight: 300;
   font-size: 1rem;
   display: block;
@@ -78,7 +78,7 @@ section {
   padding: 1rem 1.5rem 1rem 1.5rem;
   color: DimGray;
   background-color: GhostWhite;
-  font-family: system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;

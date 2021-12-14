@@ -77,6 +77,14 @@ a:active {
   margin-top: 1rem;
 }
 
+@media (hover: hover) {
+  .answerButton:hover {
+    color: black;
+    border: 2px solid black;
+    cursor: pointer;
+  }
+}
+
 .answer_wrong {
   color: var(--color-incorrect);
   border-color: var(--color-incorrect);
@@ -124,6 +132,7 @@ section {
 .cta:hover {
   color: var(--color-links);
   border-color: var(--color-links);
+  cursor: pointer;
 }
 
 .resultTable {

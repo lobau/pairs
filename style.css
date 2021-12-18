@@ -1,6 +1,6 @@
 :root {
   --em-size: 16px;
-  --font-stack: system-ui, sans-serif;
+  --font-stack: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 
   --max-width: 24rem;
 
@@ -99,7 +99,7 @@ a:active {
 
 small {
   margin-top: 1rem;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-stack);
   font-weight: normal;
   font-size: 1rem;
   display: flex;

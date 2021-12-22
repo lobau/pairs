@@ -24,7 +24,7 @@
     <div v-if="idx < count && hasStarted">
       <h1>{{idx + 1}} / {{count}}</h1>
       <label class="answerButton"
-        :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}"
+        :class="{'answer_correct' : index == questions[idx]['correctAnswer'] && selectedAnswer != ''}, {'answer_wrong' : selectedAnswer == index  && selectedAnswer != ''}, {'answer_play' : playAnswer == index  && selectedAnswer != ''}"
         v-for="(answer, index) in questions[idx].answers" :key="index" :for="index">
         <input :id="index" type="radio" class="hidden" :value="index" @change="answered($event)"
           :disabled="selectedAnswer != ''" />

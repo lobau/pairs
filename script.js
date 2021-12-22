@@ -5,6 +5,7 @@ const app = Vue.createApp({
       hasStarted: false,
       idx: -1,
       selectedAnswer: "",
+      playAnswer: "",
       correctAnswers: 0,
       wrongAnswers: 0,
       count: 15,
@@ -38,15 +39,25 @@ const app = Vue.createApp({
       } else {
         this.wrongAnswers++;
       }
-      setTimeout(
-        function () {
-          if (this.idx < this.count - 1) {
-            this.nextQuestion();
-          } else {
-            this.showResults();
+      this.talkAnswers(0)
+    },
+    talkAnswers(talkIndex) {
+      let answers = this.questions[this.idx]["answers"]
+      if (talkIndex === answers.length) {
+        if (this.idx < this.count - 1) {
+          this.nextQuestion();
+        } else {
+          this.showResults();
+        }
+        return;
+      }
+      this.playAnswer = talkIndex;
+      let replayAnswersFunc = this.talkAnswers
+      this.talk(
+          answers[talkIndex]["word"],
+          function () {
+            replayAnswersFunc(talkIndex + 1)
           }
-        }.bind(this),
-        1000
       );
     },
     nextQuestion() {
@@ -77,7 +88,7 @@ const app = Vue.createApp({
       this.hasStarted = true;
       this.resetQuiz();
     },
-    talk(message) {
+    talk(message, onEnd = function () {}) {
       if ("speechSynthesis" in window) {
         var utterance = new SpeechSynthesisUtterance();
         utterance.volume = 1;
@@ -85,6 +96,7 @@ const app = Vue.createApp({
         utterance.pitch = 1;
         utterance.text = message;
         utterance.lang = "en-US";
+        utterance.addEventListener("end", onEnd)
         speechSynthesis.speak(utterance);
       }
     },

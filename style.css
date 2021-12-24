@@ -77,6 +77,10 @@ a:active {
   margin-top: 1rem;
 }
 
+.answer_play {
+  border: 8px solid black;
+}
+
 @media (hover: hover) {
   .answerButton:hover {
     color: black;
@@ -153,18 +157,18 @@ section {
 
 @media (prefers-color-scheme: dark) {
 
-  :root {  
+  :root {
     --color-surface: #303030;
     --color-background: #3e3e3e;
     --color-text: Gainsboro;
     --color-links: White;
-  
+
     --color-incorrect-background: FireBrick;
     --color-incorrect: Pink;
     --color-correct-background: Green;
     --color-correct: PaleGreen;
   }
-  
+
   ::selection {
     background: DimGray;
   }

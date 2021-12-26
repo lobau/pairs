@@ -14,6 +14,7 @@ const app = Vue.createApp({
             questions: this.generateQuestions(15),
             history: localStorage.getItem("history"),
             currentSession: new Date().valueOf(),
+            spokenWord: new Audio()
         };
     },
     methods: {
@@ -106,7 +107,8 @@ const app = Vue.createApp({
             this.resetQuiz();
         },
         talk(message) {
-            new Audio('audio/' + this.randomVoice + '/' + message.toLowerCase() + '.mp3').play();
+            this.spokenWord.src = 'audio/' + this.randomVoice + '/' + message.toLowerCase() + '.mp3';
+            this.spokenWord.play();
         },
         switchVoice() {
             this.randomVoice = Voices[Math.floor(Math.random() * Voices.length)];
@@ -136,49 +138,7 @@ const app = Vue.createApp({
         clearHistory() {
             localStorage.setItem("history", JSON.stringify([]));
             this.backHome();
-        },
-        scheduleNotification() {
-            if (!("Notification" in window)) {
-                alert("Your browser doesn't support the Notification API.");
-                return;
-            }
-            if (!("showTrigger" in Notification.prototype)) {
-                alert("Your browser doesn't support the Notification Trigger API.");
-                return;
-            }
-
-            Notification.requestPermission()
-                .then(() => {
-                    if (Notification.permission !== "granted") {
-                        throw "Notification permission is not granted";
-                    }
-                })
-                .then(() => navigator.serviceWorker.getRegistration())
-                .then((reg) => {
-                    reg.showNotification("Time to train your ears some more!", {
-                        showTrigger: new TimestampTrigger(new Date().getTime() + 10 * 1000),
-                        tag: new Date().getTime(), // a unique ID
-                        body: "Remember, at least 20 min a day!", // content of the push notification
-                        data: {
-                            url: window.location.href, // pass the current url to the notification
-                        },
-                        badge: "images/icon-192x192.png",
-                        icon: "images/icon-192x192.png",
-                        actions: [{
-                                action: 'open',
-                                title: 'Open'
-                            },
-                            {
-                                action: 'snooze',
-                                title: 'Snooze',
-                            }
-                        ]
-                    });
-                })
-                .catch((err) => {
-                    alert("Notification Trigger API error: " + err);
-                });
-        },
+        }
     },
     computed: {
         currentQuestion() {

@@ -53,8 +53,9 @@ body {
 }
 
 h1 {
-    text-align: left;
+    font: bold 2rem/2rem var(--font-stack);
     margin-bottom: 40px;
+    margin-top: 2rem;
 }
 
 h2 {
@@ -62,7 +63,7 @@ h2 {
 }
 
 p {
-    font: normal 1rem/1.5rem var(--font-stack);
+    font: normal 1rem/1.7rem var(--font-stack);
     margin-bottom: 1rem;
 }
 

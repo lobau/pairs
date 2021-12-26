@@ -57,11 +57,13 @@ const app = Vue.createApp({
             let answers = this.questions[this.idx]["answers"];
             if (this.talkIndex === answers.length) {
                 this.isReadingAnswers = false;
-                if (this.idx < this.count - 1) {
-                    this.nextQuestion();
-                } else {
-                    this.showResults();
-                }
+                setTimeout(function() {
+                    if (this.idx < this.count - 1) {
+                        this.nextQuestion();
+                    } else {
+                        this.showResults();
+                    }
+                }.bind(this), 1000);
                 return;
             } else {
                 this.talk(answers[this.talkIndex]["word"]);

@@ -1,0 +1,190 @@
+@font-face {
+    font-family: "Plus Jakarta";
+    src: url(/css/PlusJakartaSans-Regular.woff2) format("woff2"), url(/css/PlusJakartaSans-Regular.woff) format("woff"), url(/css/PlusJakartaSans-Regular.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Plus Jakarta";
+    src: url(/css/PlusJakartaSans-Bold.woff2) format("woff2"), url(/css/PlusJakartaSans-Bold.woff) format("woff"), url(/css/PlusJakartaSans-Bold.ttf) format("truetype");
+    font-weight: 700;
+    font-style: bold;
+    font-display: swap
+}
+
+:root {
+    --em-size: 16px;
+    --font-stack: "Plus Jakarta", -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+    --max-width: 24rem;
+    --color-surface: White;
+    --color-background: white;
+    --color-text: DimGrey;
+    --color-links: Black;
+    --color-incorrect: FireBrick;
+    --color-incorrect-background: Pink;
+    --color-correct: Green;
+    --color-correct-background: PaleGreen;
+}
+
+::selection {
+    background: Moccasin;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-stack);
+    padding: 2rem;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    font-size: var(--em-size);
+}
+
+#app {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font: bold 1.25rem/2rem var(--font-stack);
+}
+
+p {
+    font: normal 1rem/1.5rem var(--font-stack);
+    margin-bottom: 1rem;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    color: var(--color-links);
+}
+
+.answerButton,
+.answerButton:link,
+.answerButton:visited {
+    display: block;
+    position: relative;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    color: var(--color-text);
+    font-family: var(--font-stack);
+    font-weight: bold;
+    font-size: 2rem;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 0.5rem;
+    border: 2px solid var(--color-text);
+    margin-top: 1rem;
+    background: var(--color-surface);
+    cursor: pointer;
+}
+
+.answer_play:after {
+    display: block;
+    content: "";
+    background: white url("/images/speaker.svg") center center no-repeat;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    top: calc(50% - 24px);
+    left: -24px;
+    /* background: white; */
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.15);
+    outline: 2px solid var(--color-text);
+}
+
+.answer_wrong {
+    color: var(--color-incorrect);
+    border-color: var(--color-incorrect);
+    background-color: var(--color-incorrect-background);
+}
+
+.answer_correct {
+    color: var(--color-correct);
+    border-color: var(--color-correct);
+    background-color: var(--color-correct-background);
+}
+
+small {
+    margin-top: 1rem;
+    font-family: var(--font-stack);
+    font-weight: normal;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section {
+    margin-top: 2rem;
+}
+
+.cta,
+.cta:link,
+.cta:visited {
+    display: inline-block;
+    padding: 0.9rem 1.5rem 1rem 1.5rem;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    font-family: var(--font-stack);
+    font-weight: bold;
+    font-size: 1.125rem;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 0.5rem;
+    border: 2px solid var(--color-text);
+    margin-right: 0.5rem;
+    margin-top: 1rem;
+}
+
+.cta:hover {
+    color: var(--color-links);
+    border-color: var(--color-links);
+    cursor: pointer;
+}
+
+.resultTable {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+}
+
+.resultTable * {
+    padding: 0.35rem;
+    border-bottom: 1px solid Gainsboro;
+    text-align: left;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+     :root {
+        --color-surface: #303030;
+        --color-background: #3e3e3e;
+        --color-text: Gainsboro;
+        --color-links: White;
+        --color-incorrect-background: FireBrick;
+        --color-incorrect: Pink;
+        --color-correct-background: Green;
+        --color-correct: PaleGreen;
+    }
+     ::selection {
+        background: DimGray;
+    }
+}

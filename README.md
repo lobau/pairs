@@ -19,17 +19,44 @@ Several studies have been conducted to address the learning of a nonnative speec
 ## Possible later improvements
 - Storing the phonetic pronunciation of each word, so the app learn which phonemes the user has the hardest time with, and focus on those. For example, the app could notice that the user get the `ə` sound wrong often, and focus more on words containing it, like `Kernel`
 - The initial list of word is in English, but that could be adapted to many languages, like French, German, or Mandarin.
+- Only one voice is available today. Adding a second model would bring back the choice of who reads the words, and make the exercise harder.
 
 ## How to run
-This is totally client side. Just serve the files on an http server (I usually use livereload during developement) and open index.html
+This is totally client side: plain HTML, CSS and JavaScript modules, with no build step. Just serve the files on an http server (I usually use livereload during developement) and open index.html.
+
+Speech synthesis needs the files of the Piper voice, which are not in git (63 MB model, 24 MB dictionary). Download them once before starting:
+
+```sh
+mkdir -p en_US-amy-medium
+curl -L -o en_US-amy-medium/en_US-amy-medium.onnx \
+  https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx
+curl -L -o en_US-amy-medium/en_US-amy-medium.onnx.json \
+  https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/medium/en_US-amy-medium.onnx.json
+curl -L -o lib/piper/espeakng.worker.data \
+  https://rhasspy.github.io/piper-samples/espeakng.worker.data
+```
+
+Browsers only let a page use the speech APIs, the model cache, and IndexedDB over https or on localhost, so `file://` will not work.
+
+## The voice
+Words are synthesized on the fly by [Piper](https://github.com/OHF-Voice/piper1-gpl) running entirely in the browser: onnxruntime-web runs the voice model as WebAssembly, and an espeak-ng WebAssembly build turns the text into phonemes. Nothing is sent to a server, and there is no audio to pre-generate.
+
+The voice is [en_US amy (medium)](https://huggingface.co/rhasspy/piper-voices), a US English voice. To use another Piper voice, drop it in a folder, then point `MODEL_URL` and `VOICE_ID` in `js/config.js` at it.
+
+The first visit downloads the voice, which is why the app shows a progress bar. Everything big is then kept in the browser, so the next sessions start right away:
+
+- the model and the dictionary in the Cache Storage API
+- each synthesized word as a wav in IndexedDB, so a word is only ever synthesized once
+
+A word takes roughly 1 to 2 seconds to synthesize on a laptop. The app hides most of that by speaking the current word right away and preparing the other options, plus the next question, while you read.
 
 ## Technology used
 This app uses:
-- [Vue](https://vuejs.org/) for the UI 
-- The [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) to play audio
-- The [Notification API](https://notifications.spec.whatwg.org/) to trigger push notifications
-- [Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers) and [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
-- [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for keeping track of past sessions score.
+- Vanilla JavaScript modules, with no framework and no bundler
+- [Piper / piper1-gpl](https://github.com/OHF-Voice/piper1-gpl) for speech synthesis, through [onnxruntime-web](https://onnxruntime.ai/docs/tutorials/web/) and [espeak-ng](https://github.com/espeak-ng/espeak-ng), both as WebAssembly
+- [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for keeping track of past sessions score
+- The [Cache Storage API](https://developer.mozilla.org/en-US/docs/Web/API/cache_storage) and [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) to keep the voice and the synthesized words
+- [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) manifest
 
 ## Warning
 I believe that it's important when learning English to avoid saying curse words when mispronouncing words. For example, at my time at Apple I learnt the hard way to not misspronounce "sheets" when talking about the view that roll down from windows. As such, I believe it's important to train your ears on the differences between bitch and beach, shit and sheet, shart and chart, etc.

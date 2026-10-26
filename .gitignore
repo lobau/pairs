@@ -1,2 +1,6 @@
 .DS_Store
 
+# Voice model and espeak-ng dictionaries, fetched with curl (see README)
+# and cached by the browser afterwards
+en_US-amy-medium/
+lib/piper/espeakng.worker.data

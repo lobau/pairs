@@ -1,4 +1,4 @@
-const Pairs = [
+export const Pairs = [
     [{ word: "Lock", phonetic: "lˈɑːk" }, { word: "Rock", phonetic: "ɹˈɑːk" }],
     [{ word: "Wash", phonetic: "wˈɑːʃ" }, { word: "Wish", phonetic: "wˈɪʃ" }],
     [{ word: "Dish", phonetic: "dˈɪʃ" }, { word: "Dash", phonetic: "dˈæʃ" }],

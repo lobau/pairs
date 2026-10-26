@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl *)",
+      "Bash(cd *)",
+      "Bash(echo *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(python3 *)",
+      "Bash(pgrep *)"
+    ]
+  },
+  "$version": 4
+}
